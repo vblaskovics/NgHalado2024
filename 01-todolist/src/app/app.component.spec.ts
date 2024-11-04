@@ -65,7 +65,7 @@ describe('AppComponent', () => {
 
   it('should save the new todo input value', () => {
     component.isNewDialogOpen = true;
-    component.openList = [];
+    component.openTodos = [];
     fixture.detectChanges();
 
     const inputDe = dialog.query(By.css('input'));
@@ -76,7 +76,7 @@ describe('AppComponent', () => {
     okBtn.triggerEventHandler('click');
     fixture.detectChanges();
 
-    expect(component.openList.includes('Task 1')).toBeTrue();
+    expect(component.openTodos.includes('Task 1')).toBeTrue();
   })
 
   it('should hide and reset the dialog when new todo has been created', () => {
@@ -94,7 +94,7 @@ describe('AppComponent', () => {
   })  
 
   it('should render open todos', () => {
-    component.openList = ['Todo 1', 'Todo 2', 'Todo 3'];
+    component.openTodos = ['Todo 1', 'Todo 2', 'Todo 3'];
     fixture.detectChanges();
 
     expect(openList.children[0].nativeElement.textContent.trim()).toEqual('Todo 1');

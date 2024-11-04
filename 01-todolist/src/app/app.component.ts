@@ -7,12 +7,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   public isNewDialogOpen: boolean;
-  public openList: string[];
+  public openTodos: string[];
   public newTodo: string;
 
   constructor() {
     this.isNewDialogOpen = false;
-    this.openList = [];
+    this.openTodos = [];
     this.newTodo = "";
   }
 
@@ -25,7 +25,7 @@ export class AppComponent {
   }
 
   onClickSave():void {
-    this.openList.push(this.newTodo);
+    this.openTodos.push(this.newTodo);
     this.newTodo = '';
     this.isNewDialogOpen = false;
   }
