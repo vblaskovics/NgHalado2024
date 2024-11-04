@@ -78,7 +78,19 @@ describe('AppComponent', () => {
     expect(component.openList.includes('Task 1')).toBeTrue();
   })
 
-  
+  it('should hide and reset the dialog when new todo has been created', () => {
+    component.isNewDialogOpen = true;
+    component.newTodo = "Task 1";
+    fixture.detectChanges();
+
+    const okBtn = dialog.query(By.css('[data-testid="ok-btn"]'));
+    expect(okBtn).withContext('ok button element should be defined').toBeTruthy();
+    okBtn.triggerEventHandler('click');
+    fixture.detectChanges();
+
+    expect('open' in dialog.attributes).withContext('Dialog should be closed').toBeFalse();
+    expect(component.newTodo).withContext("Dialog's state should be empty").toEqual('');
+  })  
 
 
 });

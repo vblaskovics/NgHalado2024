@@ -26,5 +26,7 @@ export class AppComponent {
 
   onClickSave():void {
     this.openList.push(this.newTodo);
+    this.newTodo = '';
+    this.isNewDialogOpen = false;
   }
 }
