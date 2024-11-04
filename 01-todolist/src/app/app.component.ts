@@ -6,5 +6,13 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  
+  public isNewDialogOpen: boolean;
+
+  constructor() {
+    this.isNewDialogOpen = false;
+  }
+
+  onClickNew():void {
+    this.isNewDialogOpen = true;
+  }
 }

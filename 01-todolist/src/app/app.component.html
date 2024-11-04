@@ -1,1 +1,7 @@
 <h1>Feladat lista</h1>
+
+<button (click)="onClickNew()" data-testid="new-btn">Új feladat</button>
+
+<dialog [open]="isNewDialogOpen">
+  <h2>Új feladat létrehozása</h2>
+</dialog>
