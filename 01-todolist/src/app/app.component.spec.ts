@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 let fixture: ComponentFixture<AppComponent>;
 let component: AppComponent;
@@ -16,7 +17,7 @@ let dialog: DebugElement;
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterModule.forRoot([])],
+      imports: [RouterModule.forRoot([]), FormsModule],
       declarations: [AppComponent],
     }).compileComponents();
   });
@@ -61,6 +62,23 @@ describe('AppComponent', () => {
     expect('open' in dialog.attributes).withContext('Dialog component should not have the "open" attribute').toBeFalse();
   })
 
+  it('should save the new todo input value', () => {
+    component.isNewDialogOpen = true;
+    component.openList = [];
+    fixture.detectChanges();
+
+    const inputDe = dialog.query(By.css('input'));
+    expect(inputDe).withContext('input element should be defined').toBeTruthy();
+    inputDe.triggerEventHandler('input', { target: { value: 'Task 1' }});
+    const okBtn = dialog.query(By.css('[data-testid="ok-btn"]'));
+    expect(okBtn).withContext('ok button element should be defined').toBeTruthy();
+    okBtn.triggerEventHandler('click');
+    fixture.detectChanges();
+
+    expect(component.openList.includes('Task 1')).toBeTrue();
+  })
+
+  
 
 
 });

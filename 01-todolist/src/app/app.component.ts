@@ -7,9 +7,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   public isNewDialogOpen: boolean;
+  public openList: string[];
+  public newTodo: string;
 
   constructor() {
     this.isNewDialogOpen = false;
+    this.openList = [];
+    this.newTodo = "";
   }
 
   onClickNew():void {
@@ -18,5 +22,9 @@ export class AppComponent {
 
   onClickCancel():void {
     this.isNewDialogOpen = false;
+  }
+
+  onClickSave():void {
+    this.openList.push(this.newTodo);
   }
 }
