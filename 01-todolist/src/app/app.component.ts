@@ -15,4 +15,8 @@ export class AppComponent {
   onClickNew():void {
     this.isNewDialogOpen = true;
   }
+
+  onClickCancel():void {
+    this.isNewDialogOpen = false;
+  }
 }

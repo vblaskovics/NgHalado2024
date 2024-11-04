@@ -54,6 +54,13 @@ describe('AppComponent', () => {
     expect('open' in dialog.attributes).withContext('Dialog component should have the "open" attribute').toBeTrue();
   })
 
+  it('should hide "Új feladat létrehozása" dialog when "Mégse" button has been clicked', () => {
+    const cancelBtn = fixture.debugElement.query(By.css('[data-testid="cancel-btn"]'));
+    cancelBtn.triggerEventHandler('click');
+    fixture.detectChanges();
+    expect('open' in dialog.attributes).withContext('Dialog component should not have the "open" attribute').toBeFalse();
+  })
+
 
 
 });
