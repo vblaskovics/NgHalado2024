@@ -2,11 +2,18 @@
 
 <button (click)="onClickNew()" data-testid="new-btn">Új feladat</button>
 
+<h2>Folyamatban</h2>
+<ul data-testid="open-list">
+  <li *ngFor="let todo of openList">
+    {{ todo }}
+  </li>
+</ul>
+
 <dialog [open]="isNewDialogOpen">
   <h2>Új feladat létrehozása</h2>
   <p>
     <span>Új feladat:</span>
-    <input type="text" [(ngModel)]="newTodo"/>
+    <input type="text" [(ngModel)]="newTodo" />
   </p>
   <button (click)="onClickCancel()" data-testid="cancel-btn">Mégse</button>
   <button (click)="onClickSave()" data-testid="ok-btn">Mentés</button>

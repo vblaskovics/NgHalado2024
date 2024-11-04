@@ -28,6 +28,7 @@ describe('AppComponent', () => {
 
     newBtn = fixture.debugElement.query(By.css('[data-testid="new-btn"]'));
     dialog = fixture.debugElement.query(By.css('dialog'));
+    openList = fixture.debugElement.query(By.css('[data-testid="open-list"]'));
   });
 
   it('should create the app', () => {
@@ -92,5 +93,13 @@ describe('AppComponent', () => {
     expect(component.newTodo).withContext("Dialog's state should be empty").toEqual('');
   })  
 
+  it('should render open todos', () => {
+    component.openList = ['Todo 1', 'Todo 2', 'Todo 3'];
+    fixture.detectChanges();
+
+    expect(openList.children[0].nativeElement.textContent.trim()).toEqual('Todo 1');
+    expect(openList.children[1].nativeElement.textContent.trim()).toEqual('Todo 2');
+    expect(openList.children[2].nativeElement.textContent.trim()).toEqual('Todo 3');
+  })
 
 });
