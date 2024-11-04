@@ -4,7 +4,14 @@
 
 <h2>Folyamatban</h2>
 <ul data-testid="open-list">
-  <li *ngFor="let todo of openTodos">
+  <li *ngFor="let todo of openTodos" (click)="onClickOpenTodo(todo)">
+    {{ todo }}
+  </li>
+</ul>
+
+<h2>Kész</h2>
+<ul data-testid="done-list">
+  <li *ngFor="let todo of doneTodos">
     {{ todo }}
   </li>
 </ul>

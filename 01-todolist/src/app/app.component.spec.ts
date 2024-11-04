@@ -29,6 +29,7 @@ describe('AppComponent', () => {
     newBtn = fixture.debugElement.query(By.css('[data-testid="new-btn"]'));
     dialog = fixture.debugElement.query(By.css('dialog'));
     openList = fixture.debugElement.query(By.css('[data-testid="open-list"]'));
+    doneList = fixture.debugElement.query(By.css('[data-testid="done-list"]'));
   });
 
   it('should create the app', () => {
@@ -100,6 +101,26 @@ describe('AppComponent', () => {
     expect(openList.children[0].nativeElement.textContent.trim()).toEqual('Todo 1');
     expect(openList.children[1].nativeElement.textContent.trim()).toEqual('Todo 2');
     expect(openList.children[2].nativeElement.textContent.trim()).toEqual('Todo 3');
+  })
+
+  it('should move todo to done list on click', () => {
+    component.openTodos = ['Todo 1'];
+    fixture.detectChanges();
+    
+    openList.children[0].triggerEventHandler('click');
+    fixture.detectChanges();
+
+    expect(component.openTodos.length).withContext('There should be no open todo').toEqual(0);
+    expect(component.doneTodos[0]).withContext('"Todo 1" should be done').toEqual('Todo 1');
+  })
+
+  it('should render open todos', () => {
+    component.doneTodos = ['Todo 1', 'Todo 2', 'Todo 3'];
+    fixture.detectChanges();
+
+    expect(doneList.children[0].nativeElement.textContent.trim()).toEqual('Todo 1');
+    expect(doneList.children[1].nativeElement.textContent.trim()).toEqual('Todo 2');
+    expect(doneList.children[2].nativeElement.textContent.trim()).toEqual('Todo 3');
   })
 
 });
