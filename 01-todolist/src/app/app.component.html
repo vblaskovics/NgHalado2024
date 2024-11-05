@@ -4,11 +4,7 @@
 <button (click)="onClickDelete()" data-testid="delete-btn">Befejezettek törlése</button>
 
 <h2>Folyamatban</h2>
-<ul data-testid="open-list">
-  <li *ngFor="let todo of openTodos" (click)="onClickOpenTodo(todo)">
-    {{ todo }}
-  </li>
-</ul>
+<app-todo-list [todos]="openTodos" (clickTodo)="onSelectOpenTodo($event)" data-testid="open-list"></app-todo-list>
 
 <h2 data-testid="done-list-title" (click)="onClickDoneListTitle()">
   <span *ngIf="!isDoneListOpen">👉</span>

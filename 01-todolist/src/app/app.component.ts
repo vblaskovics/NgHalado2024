@@ -38,7 +38,7 @@ export class AppComponent {
     this.isNewDialogOpen = false;
   }
 
-  onClickOpenTodo(todo: string) {
+  onSelectOpenTodo(todo: string) {
     this.openTodos = this.openTodos.filter((t) => t !== todo);
     this.doneTodos.push(todo);
   }

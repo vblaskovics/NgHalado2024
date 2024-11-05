@@ -2,8 +2,17 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { Component, DebugElement, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-todo-list',
+  template: ''
+})
+class MockTodoListComponent {
+  @Input() todos: string[] = [];
+  @Output() clickTodo: EventEmitter<string> = new EventEmitter<string>();
+}
 
 let fixture: ComponentFixture<AppComponent>;
 let component: AppComponent;
@@ -17,7 +26,7 @@ describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RouterModule.forRoot([]), FormsModule],
-      declarations: [AppComponent],
+      declarations: [AppComponent, MockTodoListComponent],
     }).compileComponents();
   });
 
@@ -107,20 +116,11 @@ describe('AppComponent', () => {
     expect(component.doneTodos.length).toBe(0);
   })
 
-  it('should render open todos', () => {
-    component.openTodos = ['Todo 1', 'Todo 2', 'Todo 3'];
-    fixture.detectChanges();
-
-    expect(openList.children[0].nativeElement.textContent.trim()).toEqual('Todo 1');
-    expect(openList.children[1].nativeElement.textContent.trim()).toEqual('Todo 2');
-    expect(openList.children[2].nativeElement.textContent.trim()).toEqual('Todo 3');
-  })
-
   it('should move todo to done list on click', () => {
     component.openTodos = ['Todo 1'];
     fixture.detectChanges();
     
-    openList.children[0].triggerEventHandler('click');
+    openList.triggerEventHandler('clickTodo', 'Todo 1');
     fixture.detectChanges();
 
     expect(component.openTodos.length).withContext('There should be no open todo').toEqual(0);
