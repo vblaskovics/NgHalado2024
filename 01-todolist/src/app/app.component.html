@@ -11,7 +11,7 @@
 
 <h2>Kész</h2>
 <ul data-testid="done-list">
-  <li *ngFor="let todo of doneTodos">
+  <li *ngFor="let todo of doneTodos" (click)="onClickDoneTodo(todo)">
     {{ todo }}
   </li>
 </ul>

@@ -37,8 +37,8 @@ export class AppComponent {
     this.doneTodos.push(todo);
   }
 
-  // onClickDoneTodo(todo: string) {
-  //   this.doneTodos = this.openTodos.filter((t) => t !== todo);
-  //   this.openTodos.push(todo);
-  // }
+  onClickDoneTodo(todo: string) {
+    this.doneTodos = this.openTodos.filter((t) => t !== todo);
+    this.openTodos.push(todo);
+  }
 }

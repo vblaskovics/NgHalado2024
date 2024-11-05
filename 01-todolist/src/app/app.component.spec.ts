@@ -123,4 +123,15 @@ describe('AppComponent', () => {
     expect(doneList.children[2].nativeElement.textContent.trim()).toEqual('Todo 3');
   })
 
+  it('should move todo to open list from done list on click', () => {
+    component.doneTodos = ['Todo 1'];
+    fixture.detectChanges();
+    
+    doneList.children[0].triggerEventHandler('click');
+    fixture.detectChanges();
+
+    expect(component.doneTodos.length).withContext('There should be no done todo').toEqual(0);
+    expect(component.openTodos[0]).withContext('"Todo 1" should be open').toEqual('Todo 1');
+  })
+
 });
