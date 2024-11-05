@@ -1,12 +1,7 @@
-<app-header [numberOfTodos]="openTodos.length"></app-header>
+<app-header [numberOfTodos]="todoService.openTodos.length"></app-header>
 
 <app-page
   (openNewTodoDialog)="isNewDialogOpen = true"
-  (deleteTodos)="deleteTodos()"
-  (selectOpenTodo)="onSelectOpenTodo($event)"
-  (selectDoneTodo)="onSelectDoneTodo($event)"
-  [openTodos]="openTodos"
-  [doneTodos]="doneTodos"
 ></app-page>
 
 <dialog [open]="isNewDialogOpen">
