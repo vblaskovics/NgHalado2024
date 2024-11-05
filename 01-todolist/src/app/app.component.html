@@ -1,6 +1,7 @@
 <h1>Feladat lista</h1>
 
 <button (click)="onClickNew()" data-testid="new-btn">Új feladat</button>
+<button (click)="onClickDelete()" data-testid="delete-btn">Befejezettek törlése</button>
 
 <h2>Folyamatban</h2>
 <ul data-testid="open-list">
@@ -9,7 +10,11 @@
   </li>
 </ul>
 
-<h2 data-testid="done-list-title" (click)="onClickDoneListTitle()">Kész</h2>
+<h2 data-testid="done-list-title" (click)="onClickDoneListTitle()">
+  <span *ngIf="!isDoneListOpen">👉</span>
+  <span *ngIf="isDoneListOpen">👇</span>
+  Kész
+</h2>
 <ul *ngIf="isDoneListOpen" data-testid="done-list">
   <li *ngFor="let todo of doneTodos" (click)="onClickDoneTodo(todo)">
     {{ todo }}

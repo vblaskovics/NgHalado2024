@@ -24,6 +24,10 @@ export class AppComponent {
     this.isNewDialogOpen = true;
   }
 
+  onClickDelete():void {
+    this.doneTodos = [];
+  }
+
   onClickCancel():void {
     this.isNewDialogOpen = false;
   }

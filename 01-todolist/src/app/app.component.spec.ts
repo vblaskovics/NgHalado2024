@@ -26,6 +26,7 @@ describe('AppComponent', () => {
     component = fixture.componentInstance;
 
     newBtn = fixture.debugElement.query(By.css('[data-testid="new-btn"]'));
+    deleteBtn = fixture.debugElement.query(By.css('[data-testid="delete-btn"]'));
     dialog = fixture.debugElement.query(By.css('dialog'));
     openList = fixture.debugElement.query(By.css('[data-testid="open-list"]'));
   });
@@ -42,6 +43,10 @@ describe('AppComponent', () => {
 
   it('should render "Új feladat" button', () => {
     expect(newBtn).toBeTruthy();
+  })
+
+  it('should render "Delete" button', () => {
+    expect(deleteBtn).toBeTruthy();
   })
 
   it('should not show "Új feladat létrehozása" dialog initially', () => {
@@ -91,6 +96,16 @@ describe('AppComponent', () => {
     expect('open' in dialog.attributes).withContext('Dialog should be closed').toBeFalse();
     expect(component.newTodo).withContext("Dialog's state should be empty").toEqual('');
   })  
+
+  it('should delete all todos in done when user clicks on delete button', () => {
+    component.doneTodos = ['Todo 1', 'Todo 2'];
+    fixture.detectChanges();
+    
+    deleteBtn.triggerEventHandler('click');
+    fixture.detectChanges();
+
+    expect(component.doneTodos.length).toBe(0);
+  })
 
   it('should render open todos', () => {
     component.openTodos = ['Todo 1', 'Todo 2', 'Todo 3'];
