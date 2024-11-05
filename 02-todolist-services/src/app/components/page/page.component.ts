@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { TodoService } from '../../services/todo.service';
 
 @Component({
   selector: 'app-page',
@@ -8,15 +9,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class PageComponent {
   isDoneListOpen: boolean = false;
 
-  @Input() openTodos: string[] = [];
-  @Input() doneTodos: string[] = [];
-
   @Output() openNewTodoDialog: EventEmitter<void> = new EventEmitter();
-  @Output() deleteTodos: EventEmitter<void> = new EventEmitter();
-  @Output() selectOpenTodo: EventEmitter<string> = new EventEmitter();
-  @Output() selectDoneTodo: EventEmitter<string> = new EventEmitter();
 
-  onClickDoneListTitle(){
+  constructor(public todoService: TodoService) {}
+
+  onClickDoneListTitle() {
     this.isDoneListOpen = !this.isDoneListOpen;
   }
 }

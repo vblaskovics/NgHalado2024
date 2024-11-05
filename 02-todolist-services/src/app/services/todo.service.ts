@@ -9,6 +9,14 @@ export class TodoService {
 
   constructor() { }
 
+  getOpenTodos() {
+    return this.openTodos;
+  }
+
+  getDoneTodos() {
+    return this.doneTodos;
+  }
+
   deleteTodos():void {
     this.doneTodos = [];
   }

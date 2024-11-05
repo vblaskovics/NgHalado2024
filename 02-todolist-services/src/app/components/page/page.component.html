@@ -1,14 +1,14 @@
 <h1>Feladat lista</h1>
 
 <button (click)="openNewTodoDialog.emit()" data-testid="new-btn">Új feladat</button>
-<button (click)="deleteTodos.emit()" data-testid="delete-btn">
+<button (click)="todoService.deleteTodos()" data-testid="delete-btn">
   Befejezettek törlése
 </button>
 
 <h2>Folyamatban</h2>
 <app-todo-list
-  [todos]="openTodos"
-  (clickTodo)="selectOpenTodo.emit($event)"
+  [todos]="todoService.openTodos"
+  (clickTodo)="todoService.finishTodo($event)"
   data-testid="open-list"
 ></app-todo-list>
 
@@ -19,7 +19,7 @@
 </h2>
 <app-todo-list
   *ngIf="isDoneListOpen"
-  [todos]="doneTodos"
-  (clickTodo)="selectDoneTodo.emit($event)"
+  [todos]="todoService.doneTodos"
+  (clickTodo)="todoService.reopenTodo($event)"
   data-testid="done-list"
 ></app-todo-list>
