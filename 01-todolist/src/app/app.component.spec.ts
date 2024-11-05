@@ -11,7 +11,6 @@ let component: AppComponent;
 let newBtn: DebugElement;
 let deleteBtn: DebugElement;
 let openList: DebugElement;
-let doneList: DebugElement;
 let dialog: DebugElement;
 
 describe('AppComponent', () => {
@@ -29,7 +28,6 @@ describe('AppComponent', () => {
     newBtn = fixture.debugElement.query(By.css('[data-testid="new-btn"]'));
     dialog = fixture.debugElement.query(By.css('dialog'));
     openList = fixture.debugElement.query(By.css('[data-testid="open-list"]'));
-    doneList = fixture.debugElement.query(By.css('[data-testid="done-list"]'));
   });
 
   it('should create the app', () => {
@@ -114,9 +112,12 @@ describe('AppComponent', () => {
     expect(component.doneTodos[0]).withContext('"Todo 1" should be done').toEqual('Todo 1');
   })
 
-  it('should render open todos', () => {
+  it('should render done todos', () => {
     component.doneTodos = ['Todo 1', 'Todo 2', 'Todo 3'];
+    component.isDoneListOpen = true;
     fixture.detectChanges();
+    
+    const doneList = fixture.debugElement.query(By.css('[data-testid="done-list"]'));
 
     expect(doneList.children[0].nativeElement.textContent.trim()).toEqual('Todo 1');
     expect(doneList.children[1].nativeElement.textContent.trim()).toEqual('Todo 2');
@@ -125,13 +126,37 @@ describe('AppComponent', () => {
 
   it('should move todo to open list from done list on click', () => {
     component.doneTodos = ['Todo 1'];
+    component.isDoneListOpen = true;
     fixture.detectChanges();
+
+    const doneList = fixture.debugElement.query(By.css('[data-testid="done-list"]'));
     
     doneList.children[0].triggerEventHandler('click');
     fixture.detectChanges();
 
     expect(component.doneTodos.length).withContext('There should be no done todo').toEqual(0);
     expect(component.openTodos[0]).withContext('"Todo 1" should be open').toEqual('Todo 1');
+  })
+
+  it('should close done list in the beginning', () => {
+    component.doneTodos = ['Todo 1'];
+    fixture.detectChanges();
+    
+    const doneList =  fixture.debugElement.query(By.css('[data-testid="done-list"]'));
+    
+    expect(doneList).toBeFalsy();
+  })
+  
+  it('should open done list on click', () => {
+    component.doneTodos = ['Todo 1'];
+    fixture.detectChanges();
+    
+    const doneListTitle =  fixture.debugElement.query(By.css('[data-testid="done-list-title"]'));
+    doneListTitle.triggerEventHandler('click');
+    fixture.detectChanges();
+
+    const doneList =  fixture.debugElement.query(By.css('[data-testid="done-list"]'));
+    expect(doneList).toBeTruthy();
   })
 
 });

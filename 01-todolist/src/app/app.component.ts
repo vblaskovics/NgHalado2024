@@ -10,12 +10,14 @@ export class AppComponent {
   public openTodos: string[];
   public doneTodos: string[];
   public newTodo: string;
+  public isDoneListOpen: boolean;
 
   constructor() {
     this.isNewDialogOpen = false;
     this.openTodos = [];
     this.doneTodos = [];
     this.newTodo = "";
+    this.isDoneListOpen = false;
   }
 
   onClickNew():void {
@@ -38,7 +40,11 @@ export class AppComponent {
   }
 
   onClickDoneTodo(todo: string) {
-    this.doneTodos = this.openTodos.filter((t) => t !== todo);
+    this.doneTodos = this.doneTodos.filter((t) => t !== todo);
     this.openTodos.push(todo);
+  }
+
+  onClickDoneListTitle(){
+    this.isDoneListOpen = !this.isDoneListOpen;
   }
 }
