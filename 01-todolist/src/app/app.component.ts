@@ -43,7 +43,7 @@ export class AppComponent {
     this.doneTodos.push(todo);
   }
 
-  onClickDoneTodo(todo: string) {
+  onSelectDoneTodo(todo: string) {
     this.doneTodos = this.doneTodos.filter((t) => t !== todo);
     this.openTodos.push(todo);
   }

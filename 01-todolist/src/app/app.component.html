@@ -1,21 +1,28 @@
 <h1>Feladat lista</h1>
 
 <button (click)="onClickNew()" data-testid="new-btn">Új feladat</button>
-<button (click)="onClickDelete()" data-testid="delete-btn">Befejezettek törlése</button>
+<button (click)="onClickDelete()" data-testid="delete-btn">
+  Befejezettek törlése
+</button>
 
 <h2>Folyamatban</h2>
-<app-todo-list [todos]="openTodos" (clickTodo)="onSelectOpenTodo($event)" data-testid="open-list"></app-todo-list>
+<app-todo-list
+  [todos]="openTodos"
+  (clickTodo)="onSelectOpenTodo($event)"
+  data-testid="open-list"
+></app-todo-list>
 
 <h2 data-testid="done-list-title" (click)="onClickDoneListTitle()">
   <span *ngIf="!isDoneListOpen">👉</span>
   <span *ngIf="isDoneListOpen">👇</span>
   Kész
 </h2>
-<ul *ngIf="isDoneListOpen" data-testid="done-list">
-  <li *ngFor="let todo of doneTodos" (click)="onClickDoneTodo(todo)">
-    {{ todo }}
-  </li>
-</ul>
+<app-todo-list
+  *ngIf="isDoneListOpen"
+  [todos]="doneTodos"
+  (clickTodo)="onSelectDoneTodo($event)"
+  data-testid="done-list"
+></app-todo-list>
 
 <dialog [open]="isNewDialogOpen">
   <h2>Új feladat létrehozása</h2>

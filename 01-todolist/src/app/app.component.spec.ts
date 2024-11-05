@@ -127,18 +127,6 @@ describe('AppComponent', () => {
     expect(component.doneTodos[0]).withContext('"Todo 1" should be done').toEqual('Todo 1');
   })
 
-  it('should render done todos', () => {
-    component.doneTodos = ['Todo 1', 'Todo 2', 'Todo 3'];
-    component.isDoneListOpen = true;
-    fixture.detectChanges();
-    
-    const doneList = fixture.debugElement.query(By.css('[data-testid="done-list"]'));
-
-    expect(doneList.children[0].nativeElement.textContent.trim()).toEqual('Todo 1');
-    expect(doneList.children[1].nativeElement.textContent.trim()).toEqual('Todo 2');
-    expect(doneList.children[2].nativeElement.textContent.trim()).toEqual('Todo 3');
-  })
-
   it('should move todo to open list from done list on click', () => {
     component.doneTodos = ['Todo 1'];
     component.isDoneListOpen = true;
@@ -146,7 +134,7 @@ describe('AppComponent', () => {
 
     const doneList = fixture.debugElement.query(By.css('[data-testid="done-list"]'));
     
-    doneList.children[0].triggerEventHandler('click');
+    doneList.triggerEventHandler('clickTodo', 'Todo 1');
     fixture.detectChanges();
 
     expect(component.doneTodos.length).withContext('There should be no done todo').toEqual(0);
