@@ -36,12 +36,14 @@ export class TodoService {
   }
 
   newTodoByTitle(title: string): void {
-    const newTodo: Todo = {
-      id: todoIdCounter++,
+    const newTodo: Partial<Todo> = {
       title: title,
       completed: false,
     };
-    this.todoStore.next([...this.todoState, newTodo]);
+    // this.todoStore.next([...this.todoState, newTodo]);
+    this.httpClient.post<Todo>(API, newTodo).subscribe((todo: Todo) => {
+      this.todoStore.next([...this.todoState, todo]);
+    });
   }
 
   completeTodo(todo: Todo) {
