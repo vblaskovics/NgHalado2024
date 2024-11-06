@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, lastValueFrom, map, Observable } from 'rxjs';
+import { BehaviorSubject, forkJoin, lastValueFrom, map, Observable } from 'rxjs';
 import { Todo } from '../types/todo';
 import { HttpClient } from '@angular/common/http';
 
@@ -31,29 +31,33 @@ export class TodoService {
 
   constructor(private httpClient: HttpClient) {}
 
-  deleteCompletedTodos(): void {
+  async deleteCompletedTodos(): Promise<void> {
+    const deleteCalls:Observable<Todo>[] = this.todoState
+      .filter((t) => t.completed)
+      .map((t) =>
+        this.httpClient.delete<Todo>(`${API}/${t.id}`));
+    await lastValueFrom(forkJoin(deleteCalls));
+
     this.todoStore.next(this.todoState.filter((t) => !t.completed));
   }
 
-  newTodoByTitle(title: string): void {
+  async newTodoByTitle(title: string): Promise<void> {
     const newTodo: Partial<Todo> = {
       title: title,
       completed: false,
     };
-    this.httpClient.post<Todo>(API, newTodo).subscribe((todo: Todo) => {
-      this.todoStore.next([...this.todoState, todo]);
-    });
+    const todoRes = await lastValueFrom(this.httpClient.post<Todo>(API, newTodo))
+
+    this.todoStore.next([...this.todoState, todoRes]);
   }
 
-  completeTodo(todo: Todo) {
-    this.httpClient
-      .put<Todo>(`${API}/${todo.id}`, { completed: true })
-      .subscribe((todoRes: Todo) => {
-        let updatedState = this.todoState.map((t) =>
-          t.id === todoRes.id ? { ...todoRes } : t
-        );
-        this.todoStore.next(updatedState);
-      });
+  async completeTodo(todo: Todo) {
+    const todoRes = await lastValueFrom(this.httpClient.put<Todo>(`${API}/${todo.id}`, { completed: true }))
+      
+    let updatedState = this.todoState.map((t) =>
+      t.id === todoRes.id ? { ...todoRes } : t
+    );
+    this.todoStore.next(updatedState);
   }
 
   async reopenTodo(todo: Todo) {
@@ -67,9 +71,8 @@ export class TodoService {
     this.todoStore.next(updatedState);
   }
 
-  fetchAllTodos(): void {
-    this.httpClient.get<Todo[]>(`${API}`).subscribe((todos) => {
-      this.todoStore.next(todos);
-    });
+  async fetchAllTodos(): Promise<void> {
+    const todos = await lastValueFrom(this.httpClient.get<Todo[]>(`${API}`));
+    this.todoStore.next(todos);
   }
 }
