@@ -10,11 +10,15 @@ export class TodoService {
   private todoStore:BehaviorSubject<Todo[]> = new BehaviorSubject<Todo[]>([
     {id: '1', title: 'Todo 1', completed: false},
     {id: '1', title: 'Todo 2', completed: false},
-    {id: '1', title: 'Todo 3', completed: false},
+    {id: '1', title: 'Todo 3', completed: true},
   ]);
 
   public openTodos$:Observable<Todo[]> = this.todoStore.pipe(map((todos:Todo[]) => {
     return todos.filter((t) => !t.completed);
+  }));
+
+  public doneTodos$:Observable<Todo[]> = this.todoStore.pipe(map((todos:Todo[]) => {
+    return todos.filter((t) => t.completed);
   }));
 
   public openTodos: string[] = [];

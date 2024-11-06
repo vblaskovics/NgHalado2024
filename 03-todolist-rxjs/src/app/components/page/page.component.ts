@@ -17,12 +17,17 @@ import { Todo } from '../../types/todo';
 export class PageComponent {
   isDoneListOpen: boolean = false;
 
-  openTodoTitles$: Observable<string[]> = new Observable<string[]>();
+  openTodoTitles$: Observable<string[]>;
+  doneTodoTitles$: Observable<string[]>;
 
   @Output() openNewTodoDialog: EventEmitter<void> = new EventEmitter();
 
   constructor(public todoService: TodoService) {
     this.openTodoTitles$ = todoService.openTodos$.pipe(
+      map((todos: Todo[]) => todos.map((todo) => todo.title))
+    );
+
+    this.doneTodoTitles$ = todoService.doneTodos$.pipe(
       map((todos: Todo[]) => todos.map((todo) => todo.title))
     );
   }
