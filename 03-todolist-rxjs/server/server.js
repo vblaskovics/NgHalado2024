@@ -8,7 +8,11 @@ app.use(cors());
 
 app.use(express.json());
 
-let todos = []; // In-memory "database" for todos
+let todos = [
+  { id: 1, title: "Todo 1", completed: false },
+  { id: 2, title: "Todo 2", completed: false },
+  { id: 3, title: "Todo 3", completed: true },
+];
 
 // Create a new todo
 app.post("/todos", (req, res) => {

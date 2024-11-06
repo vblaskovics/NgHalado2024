@@ -5,17 +5,13 @@ import { HttpClient } from '@angular/common/http';
 
 let todoIdCounter = 0;
 
-const API = 'http://localhost:3000/todos'
+const API = 'http://localhost:3000/todos';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TodoService {
-  private todoStore: BehaviorSubject<Todo[]> = new BehaviorSubject<Todo[]>([
-    { id: 1, title: 'Todo 1', completed: false },
-    { id: 2, title: 'Todo 2', completed: false },
-    { id: 3, title: 'Todo 3', completed: true },
-  ]);
+  private todoStore: BehaviorSubject<Todo[]> = new BehaviorSubject<Todo[]>([]);
 
   get todoState(): Todo[] {
     return this.todoStore.getValue();
@@ -33,7 +29,7 @@ export class TodoService {
     })
   );
 
-  constructor(private httpClient:HttpClient) {}
+  constructor(private httpClient: HttpClient) {}
 
   deleteCompletedTodos(): void {
     this.todoStore.next(this.todoState.filter((t) => !t.completed));
@@ -64,7 +60,7 @@ export class TodoService {
 
   fetchAllTodos(): void {
     this.httpClient.get<Todo[]>(`${API}`).subscribe((todos) => {
-      console.log(todos);
-    })
+      this.todoStore.next(todos);
+    });
   }
 }
