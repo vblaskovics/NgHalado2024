@@ -2,29 +2,34 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { Todo } from '../types/todo';
 
+let todoIdCounter = 0;
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TodoService {
-
-  private todoStore:BehaviorSubject<Todo[]> = new BehaviorSubject<Todo[]>([
-    {id: '1', title: 'Todo 1', completed: false},
-    {id: '1', title: 'Todo 2', completed: false},
-    {id: '1', title: 'Todo 3', completed: true},
+  private todoStore: BehaviorSubject<Todo[]> = new BehaviorSubject<Todo[]>([
+    { id: '1', title: 'Todo 1', completed: false },
+    { id: '1', title: 'Todo 2', completed: false },
+    { id: '1', title: 'Todo 3', completed: true },
   ]);
 
-  public openTodos$:Observable<Todo[]> = this.todoStore.pipe(map((todos:Todo[]) => {
-    return todos.filter((t) => !t.completed);
-  }));
+  public openTodos$: Observable<Todo[]> = this.todoStore.pipe(
+    map((todos: Todo[]) => {
+      return todos.filter((t) => !t.completed);
+    })
+  );
 
-  public doneTodos$:Observable<Todo[]> = this.todoStore.pipe(map((todos:Todo[]) => {
-    return todos.filter((t) => t.completed);
-  }));
+  public doneTodos$: Observable<Todo[]> = this.todoStore.pipe(
+    map((todos: Todo[]) => {
+      return todos.filter((t) => t.completed);
+    })
+  );
 
   public openTodos: string[] = [];
   public doneTodos: string[] = [];
 
-  constructor() { }
+  constructor() {}
 
   getOpenTodos() {
     return this.openTodos;
@@ -34,12 +39,17 @@ export class TodoService {
     return this.doneTodos;
   }
 
-  deleteTodos():void {
+  deleteTodos(): void {
     this.doneTodos = [];
   }
 
-  newTodo(todo: string) {
-    this.openTodos.push(todo);
+  newTodoByTitle(title: string): void {
+    const newTodo: Todo = {
+      id: `${todoIdCounter++}`,
+      title: title,
+      completed: false,
+    };
+    this.todoStore.next([...this.todoStore.getValue(), newTodo]);
   }
 
   finishTodo(todo: string) {
@@ -51,5 +61,4 @@ export class TodoService {
     this.doneTodos = this.doneTodos.filter((t) => t !== todo);
     this.openTodos.push(todo);
   }
-
 }

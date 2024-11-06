@@ -24,7 +24,7 @@ export class AppComponent {
   }
 
   onClickSave():void {
-    this.todoService.newTodo(this.newTodo);
+    this.todoService.newTodoByTitle(this.newTodo);
     this.newTodo = '';
     this.isNewDialogOpen = false;
   }
