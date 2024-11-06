@@ -16,6 +16,10 @@ export class AppComponent {
     this.newTodo = "";
   }
 
+  ngOnInit() {
+    this.todoService.fetchAllTodos();
+  }
+
   get openTodosCount$(): Observable<number> {
     return this.todoService.openTodos$.pipe(map(todos => todos.length));
   }

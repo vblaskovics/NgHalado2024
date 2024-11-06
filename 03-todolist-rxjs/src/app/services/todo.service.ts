@@ -1,17 +1,20 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { Todo } from '../types/todo';
+import { HttpClient } from '@angular/common/http';
 
 let todoIdCounter = 0;
+
+const API = 'http://localhost:3000/todos'
 
 @Injectable({
   providedIn: 'root',
 })
 export class TodoService {
   private todoStore: BehaviorSubject<Todo[]> = new BehaviorSubject<Todo[]>([
-    { id: '1', title: 'Todo 1', completed: false },
-    { id: '2', title: 'Todo 2', completed: false },
-    { id: '3', title: 'Todo 3', completed: true },
+    { id: 1, title: 'Todo 1', completed: false },
+    { id: 2, title: 'Todo 2', completed: false },
+    { id: 3, title: 'Todo 3', completed: true },
   ]);
 
   get todoState(): Todo[] {
@@ -30,22 +33,7 @@ export class TodoService {
     })
   );
 
-  public openTodos: string[] = [];
-  public doneTodos: string[] = [];
-
-  constructor() {}
-
-  getOpenTodos() {
-    return this.openTodos;
-  }
-
-  getDoneTodos() {
-    return this.doneTodos;
-  }
-
-  deleteTodos(): void {
-    this.doneTodos = [];
-  }
+  constructor(private httpClient:HttpClient) {}
 
   deleteCompletedTodos(): void {
     this.todoStore.next(this.todoState.filter((t) => !t.completed));
@@ -53,7 +41,7 @@ export class TodoService {
 
   newTodoByTitle(title: string): void {
     const newTodo: Todo = {
-      id: `${todoIdCounter++}`,
+      id: todoIdCounter++,
       title: title,
       completed: false,
     };
@@ -72,5 +60,11 @@ export class TodoService {
       t.id === todo.id ? { ...todo, completed: false } : t
     );
     this.todoStore.next(updatedState);
+  }
+
+  fetchAllTodos(): void {
+    this.httpClient.get<Todo[]>(`${API}`).subscribe((todos) => {
+      console.log(todos);
+    })
   }
 }
