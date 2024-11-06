@@ -1,14 +1,14 @@
 <h1>Feladat lista</h1>
 
 <button (click)="openNewTodoDialog.emit()" data-testid="new-btn">Új feladat</button>
-<button (click)="todoService.deleteTodos()" data-testid="delete-btn">
+<button (click)="todoService.deleteCompletedTodos()" data-testid="delete-btn">
   Befejezettek törlése
 </button>
 
 <h2>Folyamatban</h2>
 <app-todo-list
   [todos]="(openTodos$ | async) || []"
-  (clickTodo)="todoService.finishTodo($event)"
+  (clickTodo)="todoService.completeTodo($event)"
   data-testid="open-list"
 ></app-todo-list>
 
