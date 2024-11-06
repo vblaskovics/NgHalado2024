@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, lastValueFrom, map, Observable } from 'rxjs';
 import { Todo } from '../types/todo';
 import { HttpClient } from '@angular/common/http';
 
@@ -40,22 +40,29 @@ export class TodoService {
       title: title,
       completed: false,
     };
-    // this.todoStore.next([...this.todoState, newTodo]);
     this.httpClient.post<Todo>(API, newTodo).subscribe((todo: Todo) => {
       this.todoStore.next([...this.todoState, todo]);
     });
   }
 
   completeTodo(todo: Todo) {
-    let updatedState = this.todoState.map((t) =>
-      t.id === todo.id ? { ...todo, completed: true } : t
-    );
-    this.todoStore.next(updatedState);
+    this.httpClient
+      .put<Todo>(`${API}/${todo.id}`, { completed: true })
+      .subscribe((todoRes: Todo) => {
+        let updatedState = this.todoState.map((t) =>
+          t.id === todoRes.id ? { ...todoRes } : t
+        );
+        this.todoStore.next(updatedState);
+      });
   }
 
-  reopenTodo(todo: Todo) {
+  async reopenTodo(todo: Todo) {
+    const todoRes = await lastValueFrom(
+      this.httpClient.put<Todo>(`${API}/${todo.id}`, { completed: false })
+    );
+
     let updatedState = this.todoState.map((t) =>
-      t.id === todo.id ? { ...todo, completed: false } : t
+      t.id === todo.id ? { ...todoRes } : t
     );
     this.todoStore.next(updatedState);
   }
