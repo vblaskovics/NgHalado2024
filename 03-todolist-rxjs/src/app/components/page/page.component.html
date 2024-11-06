@@ -13,12 +13,12 @@
 ></app-todo-list>
 
 <h2 data-testid="done-list-title" (click)="onClickDoneListTitle()">
-  <span *ngIf="!isDoneListOpen">👉</span>
-  <span *ngIf="isDoneListOpen">👇</span>
+  <span *ngIf="!(isDoneListOpen$ | async)">👉</span>
+  <span *ngIf="isDoneListOpen$ | async">👇</span>
   Kész
 </h2>
 <app-todo-list
-  *ngIf="isDoneListOpen"
+  *ngIf="isDoneListOpen$ | async"
   [todos]="(doneTodos$ | async) || []"
   (clickTodo)="todoService.reopenTodo($event)"
   data-testid="done-list"

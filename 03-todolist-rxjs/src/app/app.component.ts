@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TodoService } from './services/todo.service';
+import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,10 @@ export class AppComponent {
   constructor(public todoService:TodoService) {
     this.isNewDialogOpen = false;
     this.newTodo = "";
+  }
+
+  get openTodosCount$(): Observable<number> {
+    return this.todoService.openTodos$.pipe(map(todos => todos.length));
   }
 
   onClickNew():void {

@@ -1,4 +1,4 @@
-<app-header [numberOfTodos]="todoService.openTodos.length"></app-header>
+<app-header [numberOfTodos]="(openTodosCount$ | async) || 0"></app-header>
 
 <app-page
   (openNewTodoDialog)="isNewDialogOpen = true"

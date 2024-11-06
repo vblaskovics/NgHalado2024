@@ -6,16 +6,17 @@ import {
   Output,
 } from '@angular/core';
 import { TodoService } from '../../services/todo.service';
-import { map, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { Todo } from '../../types/todo';
 
 @Component({
   selector: 'app-page',
   templateUrl: './page.component.html',
   styleUrl: './page.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PageComponent {
-  isDoneListOpen: boolean = false;
+  isDoneListOpen$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   @Output() openNewTodoDialog: EventEmitter<void> = new EventEmitter();
 
@@ -31,6 +32,6 @@ export class PageComponent {
   }
 
   onClickDoneListTitle() {
-    this.isDoneListOpen = !this.isDoneListOpen;
+    this.isDoneListOpen$.next(!this.isDoneListOpen$.getValue());
   }
 }
