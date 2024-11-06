@@ -7,7 +7,7 @@
 
 <h2>Folyamatban</h2>
 <app-todo-list
-  [todos]="todoService.openTodos"
+  [todos]="(openTodoTitles$ | async) || []"
   (clickTodo)="todoService.finishTodo($event)"
   data-testid="open-list"
 ></app-todo-list>
