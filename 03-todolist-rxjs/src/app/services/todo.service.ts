@@ -52,13 +52,13 @@ export class TodoService {
     this.todoStore.next([...this.todoStore.getValue(), newTodo]);
   }
 
-  finishTodo(todo: string) {
-    this.openTodos = this.openTodos.filter((t) => t !== todo);
-    this.doneTodos.push(todo);
+  finishTodo(todo: Todo) {
+    // this.openTodos = this.openTodos.filter((t) => t !== todo);
+    // this.doneTodos.push(todo);
   }
 
-  reopenTodo(todo: string) {
-    this.doneTodos = this.doneTodos.filter((t) => t !== todo);
-    this.openTodos.push(todo);
+  reopenTodo(todo: Todo) {
+    // this.doneTodos = this.doneTodos.filter((t) => t !== todo);
+    // this.openTodos.push(todo);
   }
 }

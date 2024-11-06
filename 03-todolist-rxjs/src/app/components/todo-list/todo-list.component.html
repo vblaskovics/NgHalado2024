@@ -1,5 +1,5 @@
 <ul data-testid="todo-list-container">
   <li *ngFor="let todo of todos" (click)="onClickTodo(todo)">
-    {{ todo }}
+    {{ todo.title }}
   </li>
 </ul>

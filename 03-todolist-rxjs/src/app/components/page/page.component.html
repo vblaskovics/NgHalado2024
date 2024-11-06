@@ -7,7 +7,7 @@
 
 <h2>Folyamatban</h2>
 <app-todo-list
-  [todos]="(openTodoTitles$ | async) || []"
+  [todos]="(openTodos$ | async) || []"
   (clickTodo)="todoService.finishTodo($event)"
   data-testid="open-list"
 ></app-todo-list>
@@ -19,7 +19,7 @@
 </h2>
 <app-todo-list
   *ngIf="isDoneListOpen"
-  [todos]="(doneTodoTitles$ | async) || []"
+  [todos]="(doneTodos$ | async) || []"
   (clickTodo)="todoService.reopenTodo($event)"
   data-testid="done-list"
 ></app-todo-list>

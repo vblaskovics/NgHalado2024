@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Todo } from '../../types/todo';
 
 @Component({
   selector: 'app-todo-list',
@@ -6,10 +7,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './todo-list.component.css'
 })
 export class TodoListComponent {
-  @Input() todos: string[] = [];
-  @Output() clickTodo: EventEmitter<string> = new EventEmitter<string>();
+  @Input() todos: Todo[] = [];
+  @Output() clickTodo: EventEmitter<Todo> = new EventEmitter<Todo>();
 
-  onClickTodo(todo:string) {
+  onClickTodo(todo:Todo) {
     this.clickTodo.emit(todo);
   }
 }
