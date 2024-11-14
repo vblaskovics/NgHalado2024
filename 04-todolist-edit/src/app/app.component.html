@@ -1,6 +1,6 @@
 <app-header [numberOfTodos]="(openTodosCount$ | async) || 0"></app-header>
 
-<app-page (openNewTodoDialog)="isNewDialogOpen = true"></app-page>
+<app-page></app-page>
 
 <!-- <dialog [open]="isNewDialogOpen">
   <h2>Új feladat létrehozása</h2>
@@ -11,5 +11,3 @@
   <button (click)="onClickCancel()" data-testid="cancel-btn">Mégse</button>
   <button (click)="onClickSave()" data-testid="ok-btn">Mentés</button>
 </dialog> -->
-
-<app-dialog-new [isOpen]="isNewDialogOpen"> </app-dialog-new>

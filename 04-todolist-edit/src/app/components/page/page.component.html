@@ -1,6 +1,6 @@
 <h1>Feladat lista</h1>
 
-<button (click)="openNewTodoDialog.emit()" data-testid="new-btn">Új feladat</button>
+<button (click)="onClickNewTodo()" data-testid="new-btn">Új feladat</button>
 <button (click)="todoService.deleteCompletedTodos()" data-testid="delete-btn">
   Befejezettek törlése
 </button>
@@ -23,3 +23,5 @@
   (clickTodo)="todoService.reopenTodo($event)"
   data-testid="done-list"
 ></app-todo-list>
+
+<app-dialog-new [isOpen]="isNewDialogOpen"> </app-dialog-new>

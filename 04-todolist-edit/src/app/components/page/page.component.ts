@@ -16,9 +16,9 @@ import { Todo } from '../../types/todo';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PageComponent {
-  isDoneListOpen$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  isNewDialogOpen: boolean = false;
 
-  @Output() openNewTodoDialog: EventEmitter<void> = new EventEmitter();
+  isDoneListOpen$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(public todoService: TodoService) {
   }
@@ -33,5 +33,9 @@ export class PageComponent {
 
   onClickDoneListTitle() {
     this.isDoneListOpen$.next(!this.isDoneListOpen$.getValue());
+  }
+
+  onClickNewTodo() {
+    this.isNewDialogOpen = true;
   }
 }

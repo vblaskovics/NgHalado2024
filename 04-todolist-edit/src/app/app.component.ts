@@ -8,11 +8,11 @@ import { map, Observable } from 'rxjs';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  public isNewDialogOpen: boolean;
+
   public newTodo: string;
 
   constructor(public todoService:TodoService) {
-    this.isNewDialogOpen = false;
+
     this.newTodo = "";
   }
 
@@ -24,18 +24,9 @@ export class AppComponent {
     return this.todoService.openTodos$.pipe(map(todos => todos.length));
   }
 
-  onClickNew():void {
-    this.isNewDialogOpen = true;
-  }
-
-  onClickCancel():void {
-    this.isNewDialogOpen = false;
-  }
-
   onClickSave():void {
     this.todoService.newTodoByTitle(this.newTodo);
     this.newTodo = '';
-    this.isNewDialogOpen = false;
   }
 
 }
