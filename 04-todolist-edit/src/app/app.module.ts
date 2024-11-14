@@ -10,6 +10,7 @@ import { PageComponent } from './components/page/page.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { DialogNewComponent } from './components/dialog-new/dialog-new.component';
+import { ClickOutsideDirective } from './directives/click-outside.directive';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { DialogNewComponent } from './components/dialog-new/dialog-new.component
     HeaderComponent,
     PageComponent,
     DialogComponent,
-    DialogNewComponent
+    DialogNewComponent,
+    ClickOutsideDirective
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-<dialog [open]="isOpen">
+<dialog [open]="isOpen" appClickOutside>
   <ng-content select="[dialog-title]"></ng-content>
   <ng-content select="[dialog-content]"></ng-content>
   <ng-content select="[dialog-actions]"></ng-content>
