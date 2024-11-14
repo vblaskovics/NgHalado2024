@@ -1,0 +1,25 @@
+<h1>Feladat lista</h1>
+
+<button (click)="openNewTodoDialog.emit()" data-testid="new-btn">Új feladat</button>
+<button (click)="todoService.deleteCompletedTodos()" data-testid="delete-btn">
+  Befejezettek törlése
+</button>
+
+<h2>Folyamatban</h2>
+<app-todo-list
+  [todos]="(openTodos$ | async) || []"
+  (clickTodo)="todoService.completeTodo($event)"
+  data-testid="open-list"
+></app-todo-list>
+
+<h2 data-testid="done-list-title" (click)="onClickDoneListTitle()">
+  <span *ngIf="!(isDoneListOpen$ | async)">👉</span>
+  <span *ngIf="isDoneListOpen$ | async">👇</span>
+  Kész
+</h2>
+<app-todo-list
+  *ngIf="isDoneListOpen$ | async"
+  [todos]="(doneTodos$ | async) || []"
+  (clickTodo)="todoService.reopenTodo($event)"
+  data-testid="done-list"
+></app-todo-list>
