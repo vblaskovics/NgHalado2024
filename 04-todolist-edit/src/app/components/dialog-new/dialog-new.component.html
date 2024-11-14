@@ -1,0 +1,15 @@
+<app-dialog [isOpen]="isOpen">
+  <h2 dialog-title>Új feladat létrehozása</h2>
+
+  <div dialog-content>
+    <p>
+      <span>Új feladat:</span>
+      <input type="text" [(ngModel)]="newTodoTitle" />
+    </p>
+  </div>
+
+  <div dialog-actions>
+    <button (click)="closeDialog()" data-testid="cancel-btn">Mégse</button>
+    <button (click)="onSave()" data-testid="ok-btn">Mentés</button>
+  </div>
+</app-dialog>

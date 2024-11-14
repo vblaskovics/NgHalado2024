@@ -12,18 +12,4 @@
   <button (click)="onClickSave()" data-testid="ok-btn">Mentés</button>
 </dialog> -->
 
-<app-dialog [isOpen]="isNewDialogOpen">
-  <h2 dialog-title>Új feladat létrehozása</h2>
-
-  <div dialog-content>
-    <p>
-      <span>Új feladat:</span>
-      <input type="text" [(ngModel)]="newTodo" />
-    </p>
-  </div>
-
-  <div dialog-actions>
-    <button (click)="onClickCancel()" data-testid="cancel-btn">Mégse</button>
-    <button (click)="onClickSave()" data-testid="ok-btn">Mentés</button>
-  </div>
-</app-dialog>
+<app-dialog-new [isOpen]="isNewDialogOpen"> </app-dialog-new>

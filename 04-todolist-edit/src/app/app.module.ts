@@ -9,6 +9,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { PageComponent } from './components/page/page.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DialogComponent } from './components/dialog/dialog.component';
+import { DialogNewComponent } from './components/dialog-new/dialog-new.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { DialogComponent } from './components/dialog/dialog.component';
     TodoListComponent,
     HeaderComponent,
     PageComponent,
-    DialogComponent
+    DialogComponent,
+    DialogNewComponent
   ],
   imports: [
     BrowserModule,
