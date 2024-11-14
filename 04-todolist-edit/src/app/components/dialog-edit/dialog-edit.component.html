@@ -2,7 +2,19 @@
   <h2 dialog-title>Feladat szerkesztése</h2>
 
   <div dialog-content>
-    todo details...
+    
+    <form [formGroup]="editForm">
+      <label for="edit-title">Feladat neve</label>
+      <input id="edit-title" formControlName="title" type="text">
+      <p *ngIf="isTitleInvalid" class="error-msg">Név megadása kötelező</p>
+
+      <div>
+        <label for="edit-completed">Kész</label>
+        <input id="edit-completed" formControlName="completed" type="checkbox">
+      </div>
+
+    </form>
+
   </div>
 
   <div dialog-actions>

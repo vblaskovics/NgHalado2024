@@ -53,7 +53,6 @@ export class PageComponent {
       this.dialogService.state$,
     ]).pipe(
       filter(([isOpen, state]) => isOpen && state === 'edit'),
-      tap(() => console.log('editDialog$')),
       map((_) => true)
     );
   }
