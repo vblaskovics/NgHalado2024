@@ -6,7 +6,7 @@ import {
   Output,
 } from '@angular/core';
 import { TodoService } from '../../services/todo.service';
-import { BehaviorSubject, combineLatest, filter, map, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, filter, map, Observable, tap } from 'rxjs';
 import { Todo } from '../../types/todo';
 import { DialogService } from '../../services/dialog.service';
 
@@ -53,6 +53,7 @@ export class PageComponent {
       this.dialogService.state$,
     ]).pipe(
       filter(([isOpen, state]) => isOpen && state === 'edit'),
+      tap(() => console.log('editDialog$')),
       map((_) => true)
     );
   }
@@ -62,6 +63,7 @@ export class PageComponent {
   }
 
   onClickNewTodo() {
+    this.dialogService.setState('new');
     this.dialogService.setIsOpen(true);
   }
 
@@ -74,6 +76,7 @@ export class PageComponent {
   }
 
   onClickTodo(todo: Todo) {
+    console.log('onclick', todo)
     this.selectedTodo = todo;
     this.dialogService.setState('edit');
     this.dialogService.setIsOpen(true);
