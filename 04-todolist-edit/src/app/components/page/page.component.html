@@ -24,7 +24,16 @@
   data-testid="done-list"
 ></app-todo-list>
 
-<app-dialog-new [isOpen]="(isNewDialogOpen$ | async) || false" (close)="onCloseDialog()" (create)="onCreateTodo($event)">
+<app-dialog-new
+  [isOpen]="(isNewDialogOpen$ | async) || false"
+  (close)="onCloseDialog()"
+  (create)="onCreateTodo($event)"
+>
 </app-dialog-new>
-<app-dialog-edit [isOpen]="(isEditDialogOpen$ | async) || false" (close)="onCloseDialog()" [todo]="selectedTodo">
+<app-dialog-edit
+  [isOpen]="(isEditDialogOpen$ | async) || false"
+  [todo]="selectedTodo"
+  (close)="onCloseDialog()"
+  (edit)="onEditTodo($event)"
+>
 </app-dialog-edit>

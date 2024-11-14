@@ -5,6 +5,7 @@ import {
   interval,
   lastValueFrom,
   map,
+  mergeMap,
   Observable,
   switchMap,
 } from 'rxjs';
@@ -41,9 +42,11 @@ export class TodoService {
   constructor(private httpClient: HttpClient) {
     this.fetchAllTodos$ = this.httpClient.get<Todo[]>(`${API}`);
 
-    this.timer$.pipe(switchMap(() => this.fetchAllTodos$)).subscribe((todos) => {
-      this.todoStore.next(todos);
-    });
+    this.timer$
+      .pipe(switchMap(() => this.fetchAllTodos$))
+      .subscribe((todos) => {
+        this.todoStore.next(todos);
+      });
 
     // this.timer$.subscribe(() => {
     //   this.fetchAllTodos$.subscribe((todos) =>{
@@ -73,26 +76,36 @@ export class TodoService {
     this.todoStore.next([...this.todoState, todoRes]);
   }
 
-  async completeTodo(todo: Todo) {
-    const todoRes = await lastValueFrom(
-      this.httpClient.put<Todo>(`${API}/${todo.id}`, { completed: true })
-    );
+  // async completeTodo(todo: Todo) {
+  //   const todoRes = await lastValueFrom(
+  //     this.httpClient.put<Todo>(`${API}/${todo.id}`, { completed: true })
+  //   );
 
-    let updatedState = this.todoState.map((t) =>
-      t.id === todoRes.id ? { ...todoRes } : t
-    );
-    this.todoStore.next(updatedState);
-  }
+  //   let updatedState = this.todoState.map((t) =>
+  //     t.id === todoRes.id ? { ...todoRes } : t
+  //   );
+  //   this.todoStore.next(updatedState);
+  // }
 
-  async reopenTodo(todo: Todo) {
-    const todoRes = await lastValueFrom(
-      this.httpClient.put<Todo>(`${API}/${todo.id}`, { completed: false })
-    );
+  // async reopenTodo(todo: Todo) {
+  //   const todoRes = await lastValueFrom(
+  //     this.httpClient.put<Todo>(`${API}/${todo.id}`, { completed: false })
+  //   );
 
-    let updatedState = this.todoState.map((t) =>
-      t.id === todo.id ? { ...todoRes } : t
-    );
-    this.todoStore.next(updatedState);
+  //   let updatedState = this.todoState.map((t) =>
+  //     t.id === todo.id ? { ...todoRes } : t
+  //   );
+  //   this.todoStore.next(updatedState);
+  // }
+
+  async updateTodo(todo: Todo) {
+    await lastValueFrom(this.httpClient.put<Todo>(`${API}/${todo.id}`, todo));
+    await this.fetchAllTodos();
+
+    // const updateTodo$ = this.httpClient.put<Todo>(`${API}/${todo.id}`, todo);
+    // updateTodo$.pipe(mergeMap((res) => this.fetchAllTodos$)).subscribe((todos: Todo[]) => {
+    //   this.todoStore.next(todos);
+    // });
   }
 
   async fetchAllTodos(): Promise<void> {

@@ -44,6 +44,12 @@ export class DialogEditComponent extends DialogComponent {
     });
   }
 
+  updateTodo() {
+    if (this.editForm.invalid) return;
+    this.edit.emit({ ...this.todo, ...this.editForm.value });
+    this.editForm.reset();
+  }
+
   get isTitleInvalid(): boolean {
     return (
       (this.editForm.get('title')?.invalid &&

@@ -80,4 +80,9 @@ export class PageComponent {
     this.dialogService.setState('edit');
     this.dialogService.setIsOpen(true);
   }
+
+  onEditTodo(todo: Todo) {
+    this.todoService.updateTodo(todo);
+    this.dialogService.setIsOpen(false);
+  }
 }
