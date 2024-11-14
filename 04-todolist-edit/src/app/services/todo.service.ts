@@ -11,6 +11,7 @@ import {
 } from 'rxjs';
 import { Todo } from '../types/todo';
 import { HttpClient } from '@angular/common/http';
+import { AnalyticsService } from './analytics.service';
 
 const API = 'http://localhost:3000/todos';
 
@@ -39,7 +40,7 @@ export class TodoService {
   private timer$ = interval(3000);
   private fetchAllTodos$: Observable<Todo[]>;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private analyticsService: AnalyticsService) {
     this.fetchAllTodos$ = this.httpClient.get<Todo[]>(`${API}`);
 
     this.timer$
@@ -74,6 +75,7 @@ export class TodoService {
     );
 
     this.todoStore.next([...this.todoState, todoRes]);
+    this.analyticsService.addNewEvent();
   }
 
   // async completeTodo(todo: Todo) {

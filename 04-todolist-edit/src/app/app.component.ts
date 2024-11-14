@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   Signal,
   WritableSignal,
 } from '@angular/core';
@@ -15,6 +16,14 @@ import { AnalyticsService } from './services/analytics.service';
 })
 export class AppComponent {
   public newTodo: string;
+  
+  public eventLogText = computed(() => {
+    const eventLog = this.analyticsService.eventLog;
+    const newCount = eventLog().filter((log) => log.type === 'new-todo').length;
+    const editCount = eventLog().filter((log) => log.type === 'edit-todo').length;
+    const deleteCount = eventLog().filter((log) => log.type === 'delete-todos').length;
+    return `New: ${newCount} | Edit: ${editCount} | Delete: ${deleteCount}`;
+  });
 
   constructor(
     public todoService: TodoService,
@@ -29,14 +38,6 @@ export class AppComponent {
 
   get openTodosCount$(): Observable<number> {
     return this.todoService.openTodos$.pipe(map((todos) => todos.length));
-  }
-
-  get eventLog(): WritableSignal<number> {
-    return this.analyticsService.getEventLog();
-  }
-
-  get eventLog2(): Signal<number> {
-    return this.analyticsService.eventLog2;
   }
 
   // onClickSave():void {
