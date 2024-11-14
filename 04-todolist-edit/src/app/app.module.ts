@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { DialogNewComponent } from './components/dialog-new/dialog-new.component';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
+import { DialogEditComponent } from './components/dialog-edit/dialog-edit.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ClickOutsideDirective } from './directives/click-outside.directive';
     PageComponent,
     DialogComponent,
     DialogNewComponent,
-    ClickOutsideDirective
+    ClickOutsideDirective,
+    DialogEditComponent
   ],
   imports: [
     BrowserModule,

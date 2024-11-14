@@ -6,7 +6,7 @@ import {
   Output,
 } from '@angular/core';
 import { TodoService } from '../../services/todo.service';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, filter, map, Observable } from 'rxjs';
 import { Todo } from '../../types/todo';
 import { DialogService } from '../../services/dialog.service';
 
@@ -18,6 +18,7 @@ import { DialogService } from '../../services/dialog.service';
 })
 export class PageComponent {
   isNewDialogOpen: boolean = false;
+  selectedTodo?: Todo;
 
   isDoneListOpen$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
@@ -36,8 +37,24 @@ export class PageComponent {
     return this.todoService.doneTodos$;
   }
 
-  get isDialogOpen$(): Observable<boolean> {
-    return this.dialogService.isOpen$;
+  get isNewDialogOpen$(): Observable<boolean> {
+    return combineLatest([
+      this.dialogService.isOpen$,
+      this.dialogService.state$,
+    ]).pipe(
+      filter(([isOpen, state]) => isOpen && state === 'new'),
+      map((_) => true)
+    );
+  }
+
+  get isEditDialogOpen$(): Observable<boolean> {
+    return combineLatest([
+      this.dialogService.isOpen$,
+      this.dialogService.state$,
+    ]).pipe(
+      filter(([isOpen, state]) => isOpen && state === 'edit'),
+      map((_) => true)
+    );
   }
 
   onClickDoneListTitle() {
@@ -54,5 +71,11 @@ export class PageComponent {
 
   onCreateTodo(title: string) {
     this.todoService.newTodoByTitle(title);
+  }
+
+  onClickTodo(todo: Todo) {
+    this.selectedTodo = todo;
+    this.dialogService.setState('edit');
+    this.dialogService.setIsOpen(true);
   }
 }

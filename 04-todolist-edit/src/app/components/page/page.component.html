@@ -8,7 +8,7 @@
 <h2>Folyamatban</h2>
 <app-todo-list
   [todos]="(openTodos$ | async) || []"
-  (clickTodo)="todoService.completeTodo($event)"
+  (clickTodo)="onClickTodo($event)"
   data-testid="open-list"
 ></app-todo-list>
 
@@ -20,9 +20,11 @@
 <app-todo-list
   *ngIf="isDoneListOpen$ | async"
   [todos]="(doneTodos$ | async) || []"
-  (clickTodo)="todoService.reopenTodo($event)"
+  (clickTodo)="onClickTodo($event)"
   data-testid="done-list"
 ></app-todo-list>
 
-<app-dialog-new [isOpen]="(isDialogOpen$ | async) || false" (close)="onCloseDialog()" (create)="onCreateTodo($event)">
+<app-dialog-new [isOpen]="(isNewDialogOpen$ | async) || false" (close)="onCloseDialog()" (create)="onCreateTodo($event)">
 </app-dialog-new>
+<app-dialog-edit [isOpen]="(isEditDialogOpen$ | async) || false" (close)="onCloseDialog()">
+</app-dialog-edit>
