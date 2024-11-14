@@ -24,4 +24,5 @@
   data-testid="done-list"
 ></app-todo-list>
 
-<app-dialog-new [isOpen]="isNewDialogOpen"> </app-dialog-new>
+<app-dialog-new [isOpen]="isNewDialogOpen" (close)="onCloseDialog()" (create)="onCreateTodo($event)">
+</app-dialog-new>

@@ -38,4 +38,12 @@ export class PageComponent {
   onClickNewTodo() {
     this.isNewDialogOpen = true;
   }
+
+  onCloseDialog() {
+    this.isNewDialogOpen = false;
+  }
+
+  onCreateTodo(title: string) {
+    this.todoService.newTodoByTitle(title);
+  }
 }

@@ -9,10 +9,11 @@ import { DialogComponent } from '../dialog/dialog.component';
 export class DialogNewComponent extends DialogComponent {
   newTodoTitle = '';
 
-  @Output() title: EventEmitter<string> = new EventEmitter<string>();
+  @Output() create: EventEmitter<string> = new EventEmitter<string>();
 
   onSave() {
-    this.title.emit(this.newTodoTitle);
+    this.create.emit(this.newTodoTitle);
+    this.newTodoTitle = '';
     this.closeDialog();
   }
 }

@@ -24,9 +24,9 @@ export class AppComponent {
     return this.todoService.openTodos$.pipe(map(todos => todos.length));
   }
 
-  onClickSave():void {
-    this.todoService.newTodoByTitle(this.newTodo);
-    this.newTodo = '';
-  }
+  // onClickSave():void {
+  //   this.todoService.newTodoByTitle(this.newTodo);
+  //   this.newTodo = '';
+  // }
 
 }
